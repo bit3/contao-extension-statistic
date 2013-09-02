@@ -25,7 +25,7 @@ class DefaultStatisticData implements StatisticDataInterface
 	/**
 	 * @var bool
 	 */
-    protected $optional;
+    protected $optional = true;
 
 	/**
 	 * @var string
