@@ -1,0 +1,4 @@
+usage_statistic_server:
+    resource: "@UsageStatisticServerBundle/Resources/config/routing.yml"
+    prefix:   /
+

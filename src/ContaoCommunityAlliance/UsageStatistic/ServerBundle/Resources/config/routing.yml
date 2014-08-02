@@ -1,0 +1,3 @@
+usage_statistic_server:
+    resource: "@UsageStatisticServerBundle/Controller"
+    type:     annotation
