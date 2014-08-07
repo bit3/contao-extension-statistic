@@ -81,6 +81,22 @@ class CollectController extends AbstractEntityManagerAwareController
 		// store new data
 		if (count($body['data'])) {
 			foreach ($body['data'] as $key => $value) {
+				// backwards compatibility transform for alpha1 client release
+				if ($key == 'contao.version') {
+					$key = 'contao/contao/version';
+				}
+				else if (preg_match('~\.installation-source$~', $key)) {
+					// skip installation source information from now
+					continue;
+				}
+				else if (preg_match('~^installed\.package\.(.*)\.version$~', $key, $matches)) {
+					$key = $matches[1] . '/version';
+				}
+				else if (preg_match('~^installed\.extension\.(.*)\.version$~', $key, $matches)) {
+					// nobody should use the alpha1 client with the ER2 client ^^
+					continue;
+				}
+
 				$dataKey = $dataKeyRepository->find($key);
 
 				if (!$dataKey) {
