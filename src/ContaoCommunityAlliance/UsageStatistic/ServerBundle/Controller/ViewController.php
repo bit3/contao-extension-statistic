@@ -55,7 +55,7 @@ class ViewController
 	 */
 	public function notFoundAction(Request $request, $path)
 	{
-		$url     = $request->getUri() . '.json';
+		$url     = preg_replace('~\.\w+$~', '', $request->getUri()) . '.json';
 		$content = $this->translator->trans('not-found', ['%url%' => $url], 'messages');
 
 		$response = new Response();
