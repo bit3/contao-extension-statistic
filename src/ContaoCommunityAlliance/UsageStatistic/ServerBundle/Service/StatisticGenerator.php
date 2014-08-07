@@ -106,19 +106,19 @@ class StatisticGenerator
 		$mapping->addScalarResult('month', 'month');
 		$mapping->addScalarResult('quarter', 'quarter');
 		$mapping->addScalarResult('week', 'week');
-		$mapping->addScalarResult('key', 'key');
+		$mapping->addScalarResult('key_name', 'key');
 		$mapping->addScalarResult('summary', 'summary');
 
 		$sql = <<<SQL
-SELECT $fields, key, COUNT(id) AS summary
+SELECT $fields, key_name, COUNT(id) AS summary
 FROM (
-	SELECT $query, i.id, v.key
+	SELECT $query, i.id, v.key_name
 	FROM data_values v
 	INNER JOIN installations i
 	ON i.id = v.installation
-	GROUP BY $fields, i.id, v.key
+	GROUP BY $fields, i.id, v.key_name
 ) t
-GROUP BY $fields, key
+GROUP BY $fields, key_name
 SQL;
 
 		$query            = $this->entityManager->createNativeQuery($sql, $mapping);
@@ -184,20 +184,20 @@ SQL;
 		$mapping->addScalarResult('month', 'month');
 		$mapping->addScalarResult('quarter', 'quarter');
 		$mapping->addScalarResult('week', 'week');
-		$mapping->addScalarResult('key', 'key');
+		$mapping->addScalarResult('key_name', 'key');
 		$mapping->addScalarResult('value', 'value');
 		$mapping->addScalarResult('summary', 'summary');
 
 		$sql = <<<SQL
-SELECT $fields, key, value, COUNT(id) AS summary
+SELECT $fields, key_name, value, COUNT(id) AS summary
 FROM (
-	SELECT $query, i.id, v.key, v.value
+	SELECT $query, i.id, v.key_name, v.value
 	FROM data_values v
 	INNER JOIN installations i
 	ON i.id = v.installation
-	GROUP BY $fields, i.id, v.key, v.value
+	GROUP BY $fields, i.id, v.key_name, v.value
 ) t
-GROUP BY $fields, key, value
+GROUP BY $fields, key_name, value
 SQL;
 
 		$query            = $this->entityManager->createNativeQuery($sql, $mapping);

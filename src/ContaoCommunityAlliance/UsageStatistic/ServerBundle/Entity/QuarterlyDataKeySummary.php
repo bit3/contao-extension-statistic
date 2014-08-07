@@ -42,7 +42,7 @@ class QuarterlyDataKeySummary
 	 * @Serializer\Expose
 	 *
 	 * @ORM\Id
-	 * @ORM\Column(name="key", type="string")
+	 * @ORM\Column(name="key_name", type="string")
 	 * @ORM\GeneratedValue(strategy="NONE")
 	 *
 	 * @var string

@@ -34,7 +34,7 @@ class DataValue
 	 *
 	 * @ORM\Id
 	 * @ORM\ManyToOne(targetEntity="DataKey", inversedBy="data")
-	 * @ORM\JoinColumn(name="key", referencedColumnName="key")
+	 * @ORM\JoinColumn(name="key_name", referencedColumnName="key_name")
 	 * @ORM\GeneratedValue(strategy="NONE")
 	 *
 	 * @var DataKey
