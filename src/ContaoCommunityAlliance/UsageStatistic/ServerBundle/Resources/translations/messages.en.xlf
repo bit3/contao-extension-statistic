@@ -4,7 +4,31 @@
         <body>
             <trans-unit id="not-found">
                 <source>not-found</source>
-                <target>Path not found, have you forgot to add the requested format? Try %url%</target>
+                <target><![CDATA[Path not found, have you forgot to add the requested format?
+Try %url%
+
+Possible request formats:
+
+  json: full hierarchy json format
+
+    {
+      "2014": {
+        "7": {
+          "30": {
+            ...
+          }
+        }
+      }
+    }
+
+  flat: reduced time hierarchy json format
+
+    {
+      "2014-7-30": {
+        ...
+      }
+    }
+]]></target>
             </trans-unit>
         </body>
     </file>
