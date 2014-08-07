@@ -20,11 +20,11 @@ class DataValueSummaryController extends AbstractDataController
 	/**
 	 * @Route(
 	 *     "/summary/values/{year}-{month}-{day}.{_format}",
-	 *     requirements={"year"="\d{4}", "month"="\d{1,2}", "_format"="json|flat"}
+	 *     requirements={"year"="\d{4}", "month"="\d{1,2}", "_format"="json|flat\.json"}
 	 * )
 	 * @Route(
 	 *     "/summary/values/{year}-{month}-{day}/{path}.{_format}",
-	 *     requirements={"year"="\d{4}", "month"="\d{1,2}", "day"="\d{1,2}", "path"=".*", "_format"="json|flat"}
+	 *     requirements={"year"="\d{4}", "month"="\d{1,2}", "day"="\d{1,2}", "path"=".*", "_format"="json|flat\.json"}
 	 * )
 	 *
 	 * @return Response
@@ -48,11 +48,11 @@ class DataValueSummaryController extends AbstractDataController
 	/**
 	 * @Route(
 	 *     "/summary/values/{year}w{week}.{_format}",
-	 *     requirements={"year"="\d{4}", "week"="\d{1,2}", "_format"="json|flat"}
+	 *     requirements={"year"="\d{4}", "week"="\d{1,2}", "_format"="json|flat\.json"}
 	 * )
 	 * @Route(
 	 *     "/summary/values/{year}w{week}/{path}.{_format}",
-	 *     requirements={"year"="\d{4}", "week"="\d{1,2}", "path"=".*", "_format"="json|flat"}
+	 *     requirements={"year"="\d{4}", "week"="\d{1,2}", "path"=".*", "_format"="json|flat\.json"}
 	 * )
 	 *
 	 * @return Response
@@ -74,11 +74,11 @@ class DataValueSummaryController extends AbstractDataController
 	/**
 	 * @Route(
 	 *     "/summary/values/{year}-{month}.{_format}",
-	 *     requirements={"year"="\d{4}", "month"="\d{1,2}", "_format"="json|flat"}
+	 *     requirements={"year"="\d{4}", "month"="\d{1,2}", "_format"="json|flat\.json"}
 	 * )
 	 * @Route(
 	 *     "/summary/values/{year}-{month}/{path}.{_format}",
-	 *     requirements={"year"="\d{4}", "month"="\d{1,2}", "path"=".*", "_format"="json|flat"}
+	 *     requirements={"year"="\d{4}", "month"="\d{1,2}", "path"=".*", "_format"="json|flat\.json"}
 	 * )
 	 *
 	 * @return Response
@@ -100,11 +100,11 @@ class DataValueSummaryController extends AbstractDataController
 	/**
 	 * @Route(
 	 *     "/summary/values/{year}q{quarter}.{_format}",
-	 *     requirements={"year"="\d{4}", "quarter"="\d", "_format"="json|flat"}
+	 *     requirements={"year"="\d{4}", "quarter"="\d", "_format"="json|flat\.json"}
 	 * )
 	 * @Route(
 	 *     "/summary/values/{year}q{quarter}/{path}.{_format}",
-	 *     requirements={"year"="\d{4}", "quarter"="\d", "path"=".*", "_format"="json|flat"}
+	 *     requirements={"year"="\d{4}", "quarter"="\d", "path"=".*", "_format"="json|flat\.json"}
 	 * )
 	 *
 	 * @return Response
@@ -126,11 +126,11 @@ class DataValueSummaryController extends AbstractDataController
 	/**
 	 * @Route(
 	 *     "/summary/values/{year}.{_format}",
-	 *     requirements={"year"="\d{4}", "_format"="json|flat"}
+	 *     requirements={"year"="\d{4}", "_format"="json|flat\.json"}
 	 * )
 	 * @Route(
 	 *     "/summary/values/{year}/{path}.{_format}",
-	 *     requirements={"year"="\d{4}", "path"=".*", "_format"="json|flat"}
+	 *     requirements={"year"="\d{4}", "path"=".*", "_format"="json|flat\.json"}
 	 * )
 	 *
 	 * @return Response

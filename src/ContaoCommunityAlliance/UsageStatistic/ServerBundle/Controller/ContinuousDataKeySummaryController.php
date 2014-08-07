@@ -20,11 +20,11 @@ class ContinuousDataKeySummaryController extends AbstractDataController
 	/**
 	 * @Route(
 	 *     "/summary/keys/daily.{_format}",
-	 *     requirements={"_format"="json|flat"}
+	 *     requirements={"_format"="json|flat\.json"}
 	 * )
 	 * @Route(
 	 *     "/summary/keys/daily/{path}.{_format}",
-	 *     requirements={"path"=".*", "_format"="json|flat"}
+	 *     requirements={"path"=".*", "_format"="json|flat\.json"}
 	 * )
 	 *
 	 * @return Response
@@ -45,11 +45,11 @@ class ContinuousDataKeySummaryController extends AbstractDataController
 	/**
 	 * @Route(
 	 *     "/summary/keys/weekly.{_format}",
-	 *     requirements={"_format"="json|flat"}
+	 *     requirements={"_format"="json|flat\.json"}
 	 * )
 	 * @Route(
 	 *     "/summary/keys/weekly/{path}.{_format}",
-	 *     requirements={"path"=".*", "_format"="json|flat"}
+	 *     requirements={"path"=".*", "_format"="json|flat\.json"}
 	 * )
 	 *
 	 * @return Response
@@ -69,11 +69,11 @@ class ContinuousDataKeySummaryController extends AbstractDataController
 	/**
 	 * @Route(
 	 *     "/summary/keys/monthly.{_format}",
-	 *     requirements={"_format"="json|flat"}
+	 *     requirements={"_format"="json|flat\.json"}
 	 * )
 	 * @Route(
 	 *     "/summary/keys/monthly/{path}.{_format}",
-	 *     requirements={"path"=".*", "_format"="json|flat"}
+	 *     requirements={"path"=".*", "_format"="json|flat\.json"}
 	 * )
 	 *
 	 * @return Response
@@ -93,11 +93,11 @@ class ContinuousDataKeySummaryController extends AbstractDataController
 	/**
 	 * @Route(
 	 *     "/summary/keys/quarterly.{_format}",
-	 *     requirements={"_format"="json|flat"}
+	 *     requirements={"_format"="json|flat\.json"}
 	 * )
 	 * @Route(
 	 *     "/summary/keys/quarterly/{path}.{_format}",
-	 *     requirements={"path"=".*", "_format"="json|flat"}
+	 *     requirements={"path"=".*", "_format"="json|flat\.json"}
 	 * )
 	 *
 	 * @return Response
@@ -117,11 +117,11 @@ class ContinuousDataKeySummaryController extends AbstractDataController
 	/**
 	 * @Route(
 	 *     "/summary/keys/yearly.{_format}",
-	 *     requirements={"_format"="json|flat"}
+	 *     requirements={"_format"="json|flat\.json"}
 	 * )
 	 * @Route(
 	 *     "/summary/keys/yearly/{path}.{_format}",
-	 *     requirements={"path"=".*", "_format"="json|flat"}
+	 *     requirements={"path"=".*", "_format"="json|flat\.json"}
 	 * )
 	 *
 	 * @return Response

@@ -19,11 +19,11 @@ class DataController extends AbstractDataController
 	/**
 	 * @Route(
 	 *     "/keys.{_format}",
-	 *     requirements={"_format"="json|flat"}
+	 *     requirements={"_format"="json|flat\.json"}
 	 * )
 	 * @Route(
 	 *     "/keys/{path}.{_format}",
-	 *     requirements={"_format"="json|flat", "path"=".*"}
+	 *     requirements={"_format"="json|flat\.json", "path"=".*"}
 	 * )
 	 *
 	 * @return Response

@@ -21,7 +21,7 @@ Possible request formats:
       }
     }
 
-  flat: reduced time hierarchy json format
+  flat.json: reduced time hierarchy json format
 
     {
       "2014-7-30": {

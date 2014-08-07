@@ -100,7 +100,7 @@ abstract class AbstractDataController extends AbstractEntityManagerAwareControll
 				$response->setContent($serialized);
 				break;
 
-			case 'flat':
+			case 'flat.json':
 				$valuePart = array_pop($valueParts);
 				$lastPart  = array_pop($valueParts);
 
