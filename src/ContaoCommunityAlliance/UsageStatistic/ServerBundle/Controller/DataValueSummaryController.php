@@ -16,6 +16,35 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class DataValueSummaryController extends AbstractDataController
 {
+
+	/**
+	 * @Route(
+	 *     "/summary/values/{year}-{month}-{day}.{_format}",
+	 *     requirements={"year"="\d{4}", "month"="\d{1,2}", "_format"="json|flat"}
+	 * )
+	 * @Route(
+	 *     "/summary/values/{year}-{month}-{day}/{path}.{_format}",
+	 *     requirements={"year"="\d{4}", "month"="\d{1,2}", "day"="\d{1,2}", "path"=".*", "_format"="json|flat"}
+	 * )
+	 *
+	 * @return Response
+	 */
+	public function dailyDataValueSummaryAction(Request $request, $year, $month, $day, $path = false)
+	{
+		$queryBuilder = $this->entityManager->createQueryBuilder();
+		$queryBuilder
+			->select('s.year', 's.month', 's.day', 's.key', 's.value', 's.summary')
+			->from('UsageStatisticServerBundle:DailyDataValueSummary', 's')
+			->where($queryBuilder->expr()->eq('s.year', ':year'))
+			->andWhere($queryBuilder->expr()->eq('s.month', ':month'))
+			->andWhere($queryBuilder->expr()->eq('s.day', ':day'))
+			->setParameter('year', $year, Type::INTEGER)
+			->setParameter('month', $month, Type::INTEGER)
+			->setParameter('day', $day, Type::INTEGER);
+
+		return $this->abstractDataValueSummaryAction($request, $queryBuilder, ['year', 'month', 'day'], 's', $path);
+	}
+
 	/**
 	 * @Route(
 	 *     "/summary/values/{year}w{week}.{_format}",

@@ -19,6 +19,31 @@ class ContinuousDataValueSummaryController extends AbstractDataController
 
 	/**
 	 * @Route(
+	 *     "/summary/values/daily.{_format}",
+	 *     requirements={"_format"="json|flat"}
+	 * )
+	 * @Route(
+	 *     "/summary/values/daily/{path}.{_format}",
+	 *     requirements={"path"=".*", "_format"="json|flat"}
+	 * )
+	 *
+	 * @return Response
+	 */
+	public function dailyContinuousDataValueSummaryAction(Request $request, $path = false)
+	{
+		$queryBuilder = $this->entityManager->createQueryBuilder();
+		$queryBuilder
+			->select('s.year', 's.month', 's.day', 's.key', 's.value', 's.summary')
+			->from('UsageStatisticServerBundle:DailyDataValueSummary', 's')
+			->orderBy('s.year')
+			->addOrderBy('s.month')
+			->addOrderBy('s.day');
+
+		return $this->abstractContinuousDataValueSummaryAction($request, $queryBuilder, ['year', 'month', 'day'], 's', $path);
+	}
+
+	/**
+	 * @Route(
 	 *     "/summary/values/weekly.{_format}",
 	 *     requirements={"_format"="json|flat"}
 	 * )

@@ -42,6 +42,12 @@ class StatisticGenerator
 		return $this;
 	}
 
+	public function generateDaily()
+	{
+		$this->generateDataKeySummary('daily');
+		$this->generateDataValueSummary('daily');
+	}
+
 	public function generateWeekly()
 	{
 		$this->generateDataKeySummary('weekly');
@@ -69,6 +75,13 @@ class StatisticGenerator
 	protected function generateDataKeySummary($timespan)
 	{
 		switch ($timespan) {
+			case 'daily':
+				$entityName = 'UsageStatisticServerBundle:DailyDataKeySummary';
+				$query      = 'YEAR(v.datetime) AS year, MONTH(v.datetime) AS month, DAY(v.datetime) AS day';
+				$fields     = 'year, month, day';
+				$keys       = ['year', 'month', 'day', 'key'];
+				break;
+
 			case 'weekly':
 				$entityName = 'UsageStatisticServerBundle:WeeklyDataKeySummary';
 				$query      = 'YEAR(v.datetime) AS year, WEEKOFYEAR(v.datetime) AS week';
@@ -106,6 +119,7 @@ class StatisticGenerator
 		$mapping->addScalarResult('month', 'month');
 		$mapping->addScalarResult('quarter', 'quarter');
 		$mapping->addScalarResult('week', 'week');
+		$mapping->addScalarResult('day', 'day');
 		$mapping->addScalarResult('key_name', 'key');
 		$mapping->addScalarResult('summary', 'summary');
 
@@ -147,6 +161,13 @@ SQL;
 	protected function generateDataValueSummary($timespan)
 	{
 		switch ($timespan) {
+			case 'daily':
+				$entityName = 'UsageStatisticServerBundle:DailyDataValueSummary';
+				$query      = 'YEAR(v.datetime) AS year, MONTH(v.datetime) AS month, DAY(v.datetime) AS day';
+				$fields     = 'year, month, day';
+				$keys       = ['year', 'month', 'day', 'key', 'value'];
+				break;
+
 			case 'weekly':
 				$entityName = 'UsageStatisticServerBundle:WeeklyDataValueSummary';
 				$query      = 'YEAR(v.datetime) AS year, WEEKOFYEAR(v.datetime) AS week';
@@ -184,6 +205,7 @@ SQL;
 		$mapping->addScalarResult('month', 'month');
 		$mapping->addScalarResult('quarter', 'quarter');
 		$mapping->addScalarResult('week', 'week');
+		$mapping->addScalarResult('day', 'day');
 		$mapping->addScalarResult('key_name', 'key');
 		$mapping->addScalarResult('value', 'value');
 		$mapping->addScalarResult('summary', 'summary');

@@ -2,6 +2,7 @@
 
 namespace ContaoCommunityAlliance\UsageStatistic\ServerBundle\Command;
 
+use ContaoCommunityAlliance\UsageStatistic\ServerBundle\Service\StatisticGenerator;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Command\Command;
@@ -16,6 +17,7 @@ class GenerateStatisticCommand extends ContainerAwareCommand
 		$this
 			->setName('uss:generate-statistic')
 			->setDescription('Generate the weekly, monthly, quarterly and yearly statistics.')
+			->addOption('daily', 'd', InputOption::VALUE_NONE, 'Generate daily statistics.')
 			->addOption('weekly', 'w', InputOption::VALUE_NONE, 'Generate weekly statistics.')
 			->addOption('monthly', 'm', InputOption::VALUE_NONE, 'Generate monthly statistics.')
 			->addOption('quarterly', 'Q', InputOption::VALUE_NONE, 'Generate quarterly statistics.')
@@ -24,7 +26,12 @@ class GenerateStatisticCommand extends ContainerAwareCommand
 
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
+		/** @var StatisticGenerator $generator */
 		$generator = $this->getContainer()->get('usage_statistic_server.service.statistic_generator');
+
+		if ($input->getOption('daily')) {
+			$generator->generateDaily();
+		}
 
 		if ($input->getOption('weekly')) {
 			$generator->generateWeekly();

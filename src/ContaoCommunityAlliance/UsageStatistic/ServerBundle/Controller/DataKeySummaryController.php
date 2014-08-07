@@ -19,6 +19,34 @@ class DataKeySummaryController extends AbstractDataController
 
 	/**
 	 * @Route(
+	 *     "/summary/keys/{year}-{month}-{day}.{_format}",
+	 *     requirements={"year"="\d{4}", "month"="\d{1,2}", "_format"="json|flat"}
+	 * )
+	 * @Route(
+	 *     "/summary/keys/{year}-{month}-{day}/{path}.{_format}",
+	 *     requirements={"year"="\d{4}", "month"="\d{1,2}", "day"="\d{1,2}", "path"=".*", "_format"="json|flat"}
+	 * )
+	 *
+	 * @return Response
+	 */
+	public function dailyDataKeySummaryAction(Request $request, $year, $month, $day, $path = false)
+	{
+		$queryBuilder = $this->entityManager->createQueryBuilder();
+		$queryBuilder
+			->select('s.year', 's.month', 's.day', 's.key', 's.summary')
+			->from('UsageStatisticServerBundle:DailyDataKeySummary', 's')
+			->where($queryBuilder->expr()->eq('s.year', ':year'))
+			->andWhere($queryBuilder->expr()->eq('s.month', ':month'))
+			->andWhere($queryBuilder->expr()->eq('s.day', ':day'))
+			->setParameter('year', $year, Type::INTEGER)
+			->setParameter('month', $month, Type::INTEGER)
+			->setParameter('day', $day, Type::INTEGER);
+
+		return $this->abstractDataKeySummaryAction($request, $queryBuilder, ['year', 'month', 'day'], 's', $path);
+	}
+
+	/**
+	 * @Route(
 	 *     "/summary/keys/{year}w{week}.{_format}",
 	 *     requirements={"year"="\d{4}", "week"="\d{1,2}", "_format"="json|flat"}
 	 * )
