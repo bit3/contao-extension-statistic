@@ -7,7 +7,28 @@
                 <target><![CDATA[Path not found, have you forgot to add the requested format?
 Try %url%
 
-Possible request formats:
+Possible request uris:
+
+  URI = "/summary/", Type, "/", Time, ["/", Pattern], Format ;
+
+    Type          = "keys" | "values" ;
+    Time          = YearFormat | QuarterFormat | MonthFormat | WeekFormat | DayFormat ;
+    YearFormat    = "yearly" | Year
+    Year          = ? a year number, e.g. "2014" ?
+    QuarterFormat = "quarterly" | Year, "q", Quarter
+    Quarter       = ? a quarter number (1-4), e.g. "3" for third quarter ?
+    MonthFormat   = "monthly" | Year, "-", Month
+    Month         = ? a month number (1-12), e.g. "3" for march ?
+    WeekFormat    = "weekly" | Year, "w", Week
+    Week          = ? a week number (1-53), e.g. "30" for the 30. week ?
+    DayFormat     = "daily" | Year, "-", Month, "-", Day
+    Day           = ? a day number (1-31), e.g. "2" for the seconds day ?
+    Pattern       = ? all visible characters ? ;
+    Format        = [Hierarchy, "."], DataFormat ;
+    Hierarchy     = "flat"
+    DataFormat    = "json" | "yml" ;
+
+Possible request format examples:
 
   json: full hierarchy json format
 
