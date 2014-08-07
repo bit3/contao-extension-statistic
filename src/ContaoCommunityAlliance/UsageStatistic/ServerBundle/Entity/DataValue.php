@@ -33,13 +33,13 @@ class DataValue
 	 * @Serializer\Inline
 	 *
 	 * @ORM\Id
-	 * @ORM\ManyToOne(targetEntity="DataName", inversedBy="data")
-	 * @ORM\JoinColumn(name="name", referencedColumnName="name")
+	 * @ORM\ManyToOne(targetEntity="DataKey", inversedBy="data")
+	 * @ORM\JoinColumn(name="key", referencedColumnName="key")
 	 * @ORM\GeneratedValue(strategy="NONE")
 	 *
-	 * @var DataName
+	 * @var DataKey
 	 */
-	private $name;
+	private $key;
 
 	/**
 	 * @Serializer\Expose
@@ -80,23 +80,23 @@ class DataValue
 	}
 
 	/**
-	 * Get the data name.
+	 * Get the data key.
 	 *
-	 * @return DataName
+	 * @return DataKey
 	 */
-	public function getName()
+	public function getKey()
 	{
-		return $this->name;
+		return $this->key;
 	}
 
 	/**
-	 * @param DataName $name
+	 * @param DataKey $key
 	 *
 	 * @return static
 	 */
-	public function setName(DataName $name)
+	public function setKey(DataKey $key)
 	{
-		$this->name = $name;
+		$this->key = $key;
 		return $this;
 	}
 

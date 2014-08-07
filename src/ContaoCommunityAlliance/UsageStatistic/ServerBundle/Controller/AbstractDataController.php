@@ -2,7 +2,7 @@
 
 namespace ContaoCommunityAlliance\UsageStatistic\ServerBundle\Controller;
 
-use ContaoCommunityAlliance\UsageStatistic\ServerBundle\Entity\DataName;
+use ContaoCommunityAlliance\UsageStatistic\ServerBundle\Entity\DataKey;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\QueryBuilder;
@@ -50,7 +50,7 @@ abstract class AbstractDataController extends AbstractEntityManagerAwareControll
 
 			$expr = $queryBuilder->expr();
 			$queryBuilder
-				->andWhere($expr->like($alias . '.name', ':path'))
+				->andWhere($expr->like($alias . '.key', ':path'))
 				->setParameter('path', $path);
 		}
 	}

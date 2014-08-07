@@ -2,7 +2,7 @@
 
 namespace ContaoCommunityAlliance\UsageStatistic\ServerBundle\Controller;
 
-use ContaoCommunityAlliance\UsageStatistic\ServerBundle\Entity\DataName;
+use ContaoCommunityAlliance\UsageStatistic\ServerBundle\Entity\DataKey;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\QueryBuilder;
@@ -18,35 +18,35 @@ class DataController extends AbstractDataController
 {
 	/**
 	 * @Route(
-	 *     "/names.{_format}",
+	 *     "/keys.{_format}",
 	 *     requirements={"_format"="json"}
 	 * )
 	 * @Route(
-	 *     "/names/{path}.{_format}",
+	 *     "/keys/{path}.{_format}",
 	 *     requirements={"_format"="json", "path"=".*"}
 	 * )
 	 *
 	 * @return Response
 	 */
-	public function namesAction(Request $request, $path = false)
+	public function keysAction(Request $request, $path = false)
 	{
 		$queryBuilder = $this->entityManager->createQueryBuilder();
 		$queryBuilder
-			->select('n.name')
-			->from('UsageStatisticServerBundle:DataName', 'n');
+			->select('n.key')
+			->from('UsageStatisticServerBundle:DataKey', 'n');
 
 		$this->addPathToQuery($queryBuilder, 'n', $path);
 
 		$query  = $queryBuilder->getQuery();
 		$result = $query->getResult();
 
-		$names = array_map(
+		$keys = array_map(
 			function (array $row) {
-				return $row['name'];
+				return $row['key'];
 			},
 			$result
 		);
 
-		return $this->createResponse($request, $names);
+		return $this->createResponse($request, $keys);
 	}
 }

@@ -6,14 +6,14 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation AS Serializer;
 
 /**
- * YearlyDataNameSummary
+ * YearlyDataKeySummary
  *
  * @Serializer\ExclusionPolicy("all")
  *
- * @ORM\Table(name="summary_data_name_yearly")
- * @ORM\Entity(repositoryClass="ContaoCommunityAlliance\UsageStatistic\ServerBundle\Repository\YearlyDataNameSummaryRepository")
+ * @ORM\Table(name="summary_data_key_yearly")
+ * @ORM\Entity(repositoryClass="ContaoCommunityAlliance\UsageStatistic\ServerBundle\Repository\YearlyDataKeySummaryRepository")
  */
-class YearlyDataNameSummary
+class YearlyDataKeySummary
 {
 
 	/**
@@ -31,12 +31,12 @@ class YearlyDataNameSummary
 	 * @Serializer\Expose
 	 *
 	 * @ORM\Id
-	 * @ORM\Column(name="name", type="string")
+	 * @ORM\Column(name="key", type="string")
 	 * @ORM\GeneratedValue(strategy="NONE")
 	 *
 	 * @var string
 	 */
-	private $name;
+	private $key;
 
 	/**
 	 * @Serializer\Expose
@@ -69,19 +69,19 @@ class YearlyDataNameSummary
 	/**
 	 * @return string
 	 */
-	public function getName()
+	public function getKey()
 	{
-		return $this->name;
+		return $this->key;
 	}
 
 	/**
-	 * @param string $name
+	 * @param string $key
 	 *
 	 * @return static
 	 */
-	public function setName($name)
+	public function setKey($key)
 	{
-		$this->name = (string) $name;
+		$this->key = (string) $key;
 		return $this;
 	}
 

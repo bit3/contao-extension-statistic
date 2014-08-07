@@ -6,14 +6,14 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation AS Serializer;
 
 /**
- * WeeklyDataNameSummary
+ * QuarterlyDataKeySummary
  *
  * @Serializer\ExclusionPolicy("all")
  *
- * @ORM\Table(name="summary_data_name_weekly")
- * @ORM\Entity(repositoryClass="ContaoCommunityAlliance\UsageStatistic\ServerBundle\Repository\WeeklyDataNameSummaryRepository")
+ * @ORM\Table(name="summary_data_key_quarterly")
+ * @ORM\Entity(repositoryClass="ContaoCommunityAlliance\UsageStatistic\ServerBundle\Repository\QuarterlyDataKeySummaryRepository")
  */
-class WeeklyDataNameSummary
+class QuarterlyDataKeySummary
 {
 
 	/**
@@ -31,23 +31,23 @@ class WeeklyDataNameSummary
 	 * @Serializer\Expose
 	 *
 	 * @ORM\Id
-	 * @ORM\Column(name="week", type="integer")
+	 * @ORM\Column(name="quarter", type="integer")
 	 * @ORM\GeneratedValue(strategy="NONE")
 	 *
 	 * @var int
 	 */
-	private $week;
+	private $quarter;
 
 	/**
 	 * @Serializer\Expose
 	 *
 	 * @ORM\Id
-	 * @ORM\Column(name="name", type="string")
+	 * @ORM\Column(name="key", type="string")
 	 * @ORM\GeneratedValue(strategy="NONE")
 	 *
 	 * @var string
 	 */
-	private $name;
+	private $key;
 
 	/**
 	 * @Serializer\Expose
@@ -80,38 +80,38 @@ class WeeklyDataNameSummary
 	/**
 	 * @return int
 	 */
-	public function getWeek()
+	public function getQuarter()
 	{
-		return $this->week;
+		return $this->quarter;
 	}
 
 	/**
-	 * @param int $week
+	 * @param int $quarter
 	 *
 	 * @return static
 	 */
-	public function setWeek($week)
+	public function setQuarter($quarter)
 	{
-		$this->week = (int) $week;
+		$this->quarter = (int) $quarter;
 		return $this;
 	}
 
 	/**
 	 * @return string
 	 */
-	public function getName()
+	public function getKey()
 	{
-		return $this->name;
+		return $this->key;
 	}
 
 	/**
-	 * @param string $name
+	 * @param string $key
 	 *
 	 * @return static
 	 */
-	public function setName($name)
+	public function setKey($key)
 	{
-		$this->name = (string) $name;
+		$this->key = (string) $key;
 		return $this;
 	}
 

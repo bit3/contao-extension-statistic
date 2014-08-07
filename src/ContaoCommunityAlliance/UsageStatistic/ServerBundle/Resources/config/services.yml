@@ -2,9 +2,9 @@ parameters:
     usage_statistic_server.controller.view_controller.class: ContaoCommunityAlliance\UsageStatistic\ServerBundle\Controller\ViewController
     usage_statistic_server.controller.collect_controller.class: ContaoCommunityAlliance\UsageStatistic\ServerBundle\Controller\CollectController
     usage_statistic_server.controller.data_controller.class: ContaoCommunityAlliance\UsageStatistic\ServerBundle\Controller\DataController
-    usage_statistic_server.controller.data_name_summary_controller.class: ContaoCommunityAlliance\UsageStatistic\ServerBundle\Controller\DataNameSummaryController
+    usage_statistic_server.controller.data_key_summary_controller.class: ContaoCommunityAlliance\UsageStatistic\ServerBundle\Controller\DataKeySummaryController
     usage_statistic_server.controller.data_value_summary_controller.class: ContaoCommunityAlliance\UsageStatistic\ServerBundle\Controller\DataValueSummaryController
-    usage_statistic_server.controller.continuous_data_name_summary_controller.class: ContaoCommunityAlliance\UsageStatistic\ServerBundle\Controller\ContinuousDataNameSummaryController
+    usage_statistic_server.controller.continuous_data_key_summary_controller.class: ContaoCommunityAlliance\UsageStatistic\ServerBundle\Controller\ContinuousDataKeySummaryController
     usage_statistic_server.controller.continuous_data_value_summary_controller.class: ContaoCommunityAlliance\UsageStatistic\ServerBundle\Controller\ContinuousDataValueSummaryController
 
     usage_statistic_server.service.statistic_generator.class: ContaoCommunityAlliance\UsageStatistic\ServerBundle\Service\StatisticGenerator
@@ -26,8 +26,8 @@ services:
             - ['setEntityManager', [@doctrine.orm.default_entity_manager]]
             - ['setSerializer', [@jms_serializer]]
 
-    usage_statistic_server.controller.data_name_summary_controller:
-        class: %usage_statistic_server.controller.data_name_summary_controller.class%
+    usage_statistic_server.controller.data_key_summary_controller:
+        class: %usage_statistic_server.controller.data_key_summary_controller.class%
         calls:
             - ['setEntityManager', [@doctrine.orm.default_entity_manager]]
             - ['setSerializer', [@jms_serializer]]
@@ -38,8 +38,8 @@ services:
             - ['setEntityManager', [@doctrine.orm.default_entity_manager]]
             - ['setSerializer', [@jms_serializer]]
 
-    usage_statistic_server.controller.continuous_data_name_summary_controller:
-        class: %usage_statistic_server.controller.continuous_data_name_summary_controller.class%
+    usage_statistic_server.controller.continuous_data_key_summary_controller:
+        class: %usage_statistic_server.controller.continuous_data_key_summary_controller.class%
         calls:
             - ['setEntityManager', [@doctrine.orm.default_entity_manager]]
             - ['setSerializer', [@jms_serializer]]

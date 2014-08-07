@@ -2,7 +2,7 @@
 
 namespace ContaoCommunityAlliance\UsageStatistic\ServerBundle\Controller;
 
-use ContaoCommunityAlliance\UsageStatistic\ServerBundle\Entity\DataName;
+use ContaoCommunityAlliance\UsageStatistic\ServerBundle\Entity\DataKey;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\QueryBuilder;
@@ -32,7 +32,7 @@ class DataValueSummaryController extends AbstractDataController
 	{
 		$queryBuilder = $this->entityManager->createQueryBuilder();
 		$queryBuilder
-			->select('s.name', 's.value', 's.summary')
+			->select('s.key', 's.value', 's.summary')
 			->from('UsageStatisticServerBundle:WeeklyDataValueSummary', 's')
 			->where($queryBuilder->expr()->eq('s.year', ':year'))
 			->andWhere($queryBuilder->expr()->eq('s.week', ':week'))
@@ -58,7 +58,7 @@ class DataValueSummaryController extends AbstractDataController
 	{
 		$queryBuilder = $this->entityManager->createQueryBuilder();
 		$queryBuilder
-			->select('s.name', 's.value', 's.summary')
+			->select('s.key', 's.value', 's.summary')
 			->from('UsageStatisticServerBundle:MonthlyDataValueSummary', 's')
 			->where($queryBuilder->expr()->eq('s.year', ':year'))
 			->andWhere($queryBuilder->expr()->eq('s.month', ':month'))
@@ -84,7 +84,7 @@ class DataValueSummaryController extends AbstractDataController
 	{
 		$queryBuilder = $this->entityManager->createQueryBuilder();
 		$queryBuilder
-			->select('s.name', 's.value', 's.summary')
+			->select('s.key', 's.value', 's.summary')
 			->from('UsageStatisticServerBundle:QuarterlyDataValueSummary', 's')
 			->where($queryBuilder->expr()->eq('s.year', ':year'))
 			->andWhere($queryBuilder->expr()->eq('s.quarter', ':quarter'))
@@ -110,7 +110,7 @@ class DataValueSummaryController extends AbstractDataController
 	{
 		$queryBuilder = $this->entityManager->createQueryBuilder();
 		$queryBuilder
-			->select('s.name', 's.value', 's.summary')
+			->select('s.key', 's.value', 's.summary')
 			->from('UsageStatisticServerBundle:YearlyDataValueSummary', 's')
 			->where($queryBuilder->expr()->eq('s.year', ':year'))
 			->setParameter('year', $year, Type::INTEGER);
@@ -131,7 +131,7 @@ class DataValueSummaryController extends AbstractDataController
 	protected function abstractDataValueSummaryAction(Request $request, QueryBuilder $queryBuilder, $alias, $path)
 	{
 		$queryBuilder
-			->orderBy($alias . '.name')
+			->orderBy($alias . '.key')
 			->addOrderBy($alias . '.value');
 		$this->addPathToQuery($queryBuilder, $alias, $path);
 
@@ -140,13 +140,13 @@ class DataValueSummaryController extends AbstractDataController
 
 		$summaries = [];
 		foreach ($result as $row) {
-			if (!isset($summaries[$row['name']])) {
-				$summaries[$row['name']] = [
+			if (!isset($summaries[$row['key']])) {
+				$summaries[$row['key']] = [
 					$row['value'] => $row['summary'],
 				];
 			}
 			else {
-				$summaries[$row['name']][$row['value']] = $row['summary'];
+				$summaries[$row['key']][$row['value']] = $row['summary'];
 			}
 		}
 

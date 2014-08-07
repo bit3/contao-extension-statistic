@@ -8,29 +8,29 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation AS Serializer;
 
 /**
- * Data
+ * DataKey
  *
  * @Serializer\ExclusionPolicy("all")
  *
- * @ORM\Table(name="data_names")
- * @ORM\Entity(repositoryClass="ContaoCommunityAlliance\UsageStatistic\ServerBundle\Repository\DataNameRepository")
+ * @ORM\Table(name="data_keys")
+ * @ORM\Entity(repositoryClass="ContaoCommunityAlliance\UsageStatistic\ServerBundle\Repository\DataKeyRepository")
  */
-class DataName
+class DataKey
 {
 
 	/**
 	 * @Serializer\Expose
 	 *
 	 * @ORM\Id
-	 * @ORM\Column(name="name", type="string")
+	 * @ORM\Column(name="key", type="string")
 	 * @ORM\GeneratedValue(strategy="NONE")
 	 *
 	 * @var string
 	 */
-	private $name;
+	private $key;
 
 	/**
-	 * @ORM\OneToMany(targetEntity="DataValue", mappedBy="name")
+	 * @ORM\OneToMany(targetEntity="DataValue", mappedBy="key")
 	 *
 	 * @var Collection
 	 */
@@ -42,27 +42,29 @@ class DataName
 	}
 
 	/**
-	 * Get the data name.
+	 * Get the data key.
 	 *
-	 * @return integer
+	 * @return string
 	 */
-	public function getName()
+	public function getKey()
 	{
-		return $this->name;
+		return $this->key;
 	}
 
 	/**
-	 * @param mixed $name
+	 * @param string $key
 	 *
 	 * @return static
 	 */
-	public function setName($name)
+	public function setKey($key)
 	{
-		$this->name = (string) $name;
+		$this->key = (string) $key;
 		return $this;
 	}
 
 	/**
+	 * Get all data values associated with this key.
+	 *
 	 * @return Collection
 	 */
 	public function getData()

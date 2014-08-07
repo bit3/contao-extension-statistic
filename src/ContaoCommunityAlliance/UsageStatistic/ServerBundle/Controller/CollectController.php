@@ -2,7 +2,7 @@
 
 namespace ContaoCommunityAlliance\UsageStatistic\ServerBundle\Controller;
 
-use ContaoCommunityAlliance\UsageStatistic\ServerBundle\Entity\DataName;
+use ContaoCommunityAlliance\UsageStatistic\ServerBundle\Entity\DataKey;
 use ContaoCommunityAlliance\UsageStatistic\ServerBundle\Entity\DataValue;
 use ContaoCommunityAlliance\UsageStatistic\ServerBundle\Entity\Installation;
 use Doctrine\ORM\NoResultException;
@@ -32,7 +32,7 @@ class CollectController extends AbstractEntityManagerAwareController
 		}
 
 		$installationRepository = $this->entityManager->getRepository('UsageStatisticServerBundle:Installation');
-		$dataNameRepository     = $this->entityManager->getRepository('UsageStatisticServerBundle:DataName');
+		$dataKeyRepository      = $this->entityManager->getRepository('UsageStatisticServerBundle:DataKey');
 		$dataValueRepository    = $this->entityManager->getRepository('UsageStatisticServerBundle:DataValue');
 		$currentDateTime        = new \DateTime();
 
@@ -80,18 +80,18 @@ class CollectController extends AbstractEntityManagerAwareController
 
 		// store new data
 		if (count($body['data'])) {
-			foreach ($body['data'] as $name => $value) {
-				$dataName = $dataNameRepository->find($name);
+			foreach ($body['data'] as $key => $value) {
+				$dataKey = $dataKeyRepository->find($key);
 
-				if (!$dataName) {
-					$dataName = new DataName();
-					$dataName->setName($name);
-					$this->entityManager->persist($dataName);
+				if (!$dataKey) {
+					$dataKey = new DataKey();
+					$dataKey->setKey($key);
+					$this->entityManager->persist($dataKey);
 				}
 
 				$dataValue = new DataValue();
 				$dataValue->setInstallation($installation);
-				$dataValue->setName($dataName);
+				$dataValue->setKey($dataKey);
 				$dataValue->setValue($value);
 				$dataValue->setDateTime($currentDateTime);
 				$this->entityManager->persist($dataValue);

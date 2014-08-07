@@ -2,13 +2,13 @@
 
 namespace ContaoCommunityAlliance\UsageStatistic\ServerBundle\Service;
 
-use ContaoCommunityAlliance\UsageStatistic\ServerBundle\Entity\WeeklyDataNameSummary;
+use ContaoCommunityAlliance\UsageStatistic\ServerBundle\Entity\WeeklyDataKeySummary;
 use ContaoCommunityAlliance\UsageStatistic\ServerBundle\Entity\WeeklyDataValueSummary;
-use ContaoCommunityAlliance\UsageStatistic\ServerBundle\Entity\MonthlyDataNameSummary;
+use ContaoCommunityAlliance\UsageStatistic\ServerBundle\Entity\MonthlyDataKeySummary;
 use ContaoCommunityAlliance\UsageStatistic\ServerBundle\Entity\MonthlyDataValueSummary;
-use ContaoCommunityAlliance\UsageStatistic\ServerBundle\Entity\QuarterlyDataNameSummary;
+use ContaoCommunityAlliance\UsageStatistic\ServerBundle\Entity\QuarterlyDataKeySummary;
 use ContaoCommunityAlliance\UsageStatistic\ServerBundle\Entity\QuarterlyDataValueSummary;
-use ContaoCommunityAlliance\UsageStatistic\ServerBundle\Entity\YearlyDataNameSummary;
+use ContaoCommunityAlliance\UsageStatistic\ServerBundle\Entity\YearlyDataKeySummary;
 use ContaoCommunityAlliance\UsageStatistic\ServerBundle\Entity\YearlyDataValueSummary;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
@@ -44,57 +44,57 @@ class StatisticGenerator
 
 	public function generateWeekly()
 	{
-		$this->generateDataNameSummary('weekly');
+		$this->generateDataKeySummary('weekly');
 		$this->generateDataValueSummary('weekly');
 	}
 
 	public function generateMonthly()
 	{
-		$this->generateDataNameSummary('monthly');
+		$this->generateDataKeySummary('monthly');
 		$this->generateDataValueSummary('monthly');
 	}
 
 	public function generateQuarterly()
 	{
-		$this->generateDataNameSummary('quarterly');
+		$this->generateDataKeySummary('quarterly');
 		$this->generateDataValueSummary('quarterly');
 	}
 
 	public function generateYearly()
 	{
-		$this->generateDataNameSummary('yearly');
+		$this->generateDataKeySummary('yearly');
 		$this->generateDataValueSummary('yearly');
 	}
 
-	protected function generateDataNameSummary($timespan)
+	protected function generateDataKeySummary($timespan)
 	{
 		switch ($timespan) {
 			case 'weekly':
-				$entityName = 'UsageStatisticServerBundle:WeeklyDataNameSummary';
+				$entityName = 'UsageStatisticServerBundle:WeeklyDataKeySummary';
 				$query      = 'YEAR(v.datetime) AS year, WEEKOFYEAR(v.datetime) AS week';
 				$fields     = 'year, week';
-				$keys       = ['year', 'week', 'name'];
+				$keys       = ['year', 'week', 'key'];
 				break;
 
 			case 'monthly':
-				$entityName = 'UsageStatisticServerBundle:MonthlyDataNameSummary';
+				$entityName = 'UsageStatisticServerBundle:MonthlyDataKeySummary';
 				$query      = 'YEAR(v.datetime) AS year, MONTH(v.datetime) AS month';
 				$fields     = 'year, month';
-				$keys       = ['year', 'month', 'name'];
+				$keys       = ['year', 'month', 'key'];
 				break;
 
 			case 'quarterly':
-				$entityName = 'UsageStatisticServerBundle:QuarterlyDataNameSummary';
+				$entityName = 'UsageStatisticServerBundle:QuarterlyDataKeySummary';
 				$query      = 'YEAR(v.datetime) AS year, QUARTER(v.datetime) AS quarter';
 				$fields     = 'year, quarter';
-				$keys       = ['year', 'quarter', 'name'];
+				$keys       = ['year', 'quarter', 'key'];
 				break;
 
 			case 'yearly':
-				$entityName = 'UsageStatisticServerBundle:YearlyDataNameSummary';
+				$entityName = 'UsageStatisticServerBundle:YearlyDataKeySummary';
 				$query      = 'YEAR(v.datetime) AS year';
 				$fields     = 'year';
-				$keys       = ['year', 'name'];
+				$keys       = ['year', 'key'];
 				break;
 
 			default:
@@ -106,19 +106,19 @@ class StatisticGenerator
 		$mapping->addScalarResult('month', 'month');
 		$mapping->addScalarResult('quarter', 'quarter');
 		$mapping->addScalarResult('week', 'week');
-		$mapping->addScalarResult('name', 'name');
+		$mapping->addScalarResult('key', 'key');
 		$mapping->addScalarResult('summary', 'summary');
 
 		$sql = <<<SQL
-SELECT $fields, name, COUNT(id) AS summary
+SELECT $fields, key, COUNT(id) AS summary
 FROM (
-	SELECT $query, i.id, v.name
+	SELECT $query, i.id, v.key
 	FROM data_values v
 	INNER JOIN installations i
 	ON i.id = v.installation
-	GROUP BY $fields, i.id, v.name
+	GROUP BY $fields, i.id, v.key
 ) t
-GROUP BY $fields, name
+GROUP BY $fields, key
 SQL;
 
 		$query            = $this->entityManager->createNativeQuery($sql, $mapping);
@@ -151,28 +151,28 @@ SQL;
 				$entityName = 'UsageStatisticServerBundle:WeeklyDataValueSummary';
 				$query      = 'YEAR(v.datetime) AS year, WEEKOFYEAR(v.datetime) AS week';
 				$fields     = 'year, week';
-				$keys       = ['year', 'week', 'name', 'value'];
+				$keys       = ['year', 'week', 'key', 'value'];
 				break;
 
 			case 'monthly':
 				$entityName = 'UsageStatisticServerBundle:MonthlyDataValueSummary';
 				$query      = 'YEAR(v.datetime) AS year, MONTH(v.datetime) AS month';
 				$fields     = 'year, month';
-				$keys       = ['year', 'month', 'name', 'value'];
+				$keys       = ['year', 'month', 'key', 'value'];
 				break;
 
 			case 'quarterly':
 				$entityName = 'UsageStatisticServerBundle:QuarterlyDataValueSummary';
 				$query      = 'YEAR(v.datetime) AS year, QUARTER(v.datetime) AS quarter';
 				$fields     = 'year, quarter';
-				$keys       = ['year', 'quarter', 'name', 'value'];
+				$keys       = ['year', 'quarter', 'key', 'value'];
 				break;
 
 			case 'yearly':
 				$entityName = 'UsageStatisticServerBundle:YearlyDataValueSummary';
 				$query      = 'YEAR(v.datetime) AS year';
 				$fields     = 'year';
-				$keys       = ['year', 'name', 'value'];
+				$keys       = ['year', 'key', 'value'];
 				break;
 
 			default:
@@ -184,20 +184,20 @@ SQL;
 		$mapping->addScalarResult('month', 'month');
 		$mapping->addScalarResult('quarter', 'quarter');
 		$mapping->addScalarResult('week', 'week');
-		$mapping->addScalarResult('name', 'name');
+		$mapping->addScalarResult('key', 'key');
 		$mapping->addScalarResult('value', 'value');
 		$mapping->addScalarResult('summary', 'summary');
 
 		$sql = <<<SQL
-SELECT $fields, name, value, COUNT(id) AS summary
+SELECT $fields, key, value, COUNT(id) AS summary
 FROM (
-	SELECT $query, i.id, v.name, v.value
+	SELECT $query, i.id, v.key, v.value
 	FROM data_values v
 	INNER JOIN installations i
 	ON i.id = v.installation
-	GROUP BY $fields, i.id, v.name, v.value
+	GROUP BY $fields, i.id, v.key, v.value
 ) t
-GROUP BY $fields, name, value
+GROUP BY $fields, key, value
 SQL;
 
 		$query            = $this->entityManager->createNativeQuery($sql, $mapping);

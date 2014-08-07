@@ -2,7 +2,7 @@
 
 namespace ContaoCommunityAlliance\UsageStatistic\ServerBundle\Controller;
 
-use ContaoCommunityAlliance\UsageStatistic\ServerBundle\Entity\DataName;
+use ContaoCommunityAlliance\UsageStatistic\ServerBundle\Entity\DataKey;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\QueryBuilder;
@@ -33,7 +33,7 @@ class ContinuousDataValueSummaryController extends AbstractDataController
 	{
 		$queryBuilder = $this->entityManager->createQueryBuilder();
 		$queryBuilder
-			->select('s.year', 's.week', 's.name', 's.value', 's.summary')
+			->select('s.year', 's.week', 's.key', 's.value', 's.summary')
 			->from('UsageStatisticServerBundle:WeeklyDataValueSummary', 's')
 			->orderBy('s.year')
 			->addOrderBy('s.week');
@@ -57,7 +57,7 @@ class ContinuousDataValueSummaryController extends AbstractDataController
 	{
 		$queryBuilder = $this->entityManager->createQueryBuilder();
 		$queryBuilder
-			->select('s.year', 's.month', 's.name', 's.value', 's.summary')
+			->select('s.year', 's.month', 's.key', 's.value', 's.summary')
 			->from('UsageStatisticServerBundle:MonthlyDataValueSummary', 's')
 			->orderBy('s.year')
 			->addOrderBy('s.month');
@@ -81,7 +81,7 @@ class ContinuousDataValueSummaryController extends AbstractDataController
 	{
 		$queryBuilder = $this->entityManager->createQueryBuilder();
 		$queryBuilder
-			->select('s.year', 's.quarter', 's.name', 's.value', 's.summary')
+			->select('s.year', 's.quarter', 's.key', 's.value', 's.summary')
 			->from('UsageStatisticServerBundle:QuarterlyDataValueSummary', 's')
 			->orderBy('s.year')
 			->addOrderBy('s.quarter');
@@ -105,7 +105,7 @@ class ContinuousDataValueSummaryController extends AbstractDataController
 	{
 		$queryBuilder = $this->entityManager->createQueryBuilder();
 		$queryBuilder
-			->select('s.year', 's.name', 's.value', 's.summary')
+			->select('s.year', 's.key', 's.value', 's.summary')
 			->from('UsageStatisticServerBundle:YearlyDataValueSummary', 's')
 			->orderBy('s.year');
 
@@ -131,7 +131,7 @@ class ContinuousDataValueSummaryController extends AbstractDataController
 		$path
 	) {
 		$queryBuilder
-			->addOrderBy($alias . '.name')
+			->addOrderBy($alias . '.key')
 			->addOrderBy($alias . '.value');
 		$this->addPathToQuery($queryBuilder, $alias, $path);
 
@@ -149,10 +149,10 @@ class ContinuousDataValueSummaryController extends AbstractDataController
 				$ref = & $ref[$part];
 			}
 
-			if (!isset($ref[$row['name']])) {
-				$ref[$row['name']] = [];
+			if (!isset($ref[$row['key']])) {
+				$ref[$row['key']] = [];
 			}
-			$ref = & $ref[$row['name']];
+			$ref = & $ref[$row['key']];
 
 			$ref[$row['value']] = $row['summary'];
 		}
