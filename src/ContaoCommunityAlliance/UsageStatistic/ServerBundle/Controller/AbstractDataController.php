@@ -71,36 +71,17 @@ abstract class AbstractDataController extends AbstractEntityManagerAwareControll
 		$response->headers->set('Access-Control-Allow-Origin', '*');
 		$response->headers->set('Access-Control-Allow-Methods', '*');
 
-		$format = $request->getRequestFormat('json');
+		$format      = $request->getRequestFormat('json');
+		$formatParts = explode('.', $format);
 
-		switch ($format) {
-			case 'json':
-				$valuePart = array_pop($valueParts);
-				$lastPart  = array_pop($valueParts);
+		$hierarchy = false;
+		while (count($formatParts) > 1) {
+			$hierarchy = array_shift($formatParts);
+		}
+		$dataFormat = array_shift($formatParts);
 
-				$parts = array_merge($timeParts, $valueParts);
-
-				$data = [];
-				foreach ($result as $row) {
-					$ref = & $data;
-					foreach ($parts as $part) {
-						$part = $row[$part];
-						if (!isset($ref[$part])) {
-							$ref[$part] = [];
-						}
-						$ref = & $ref[$part];
-					}
-
-					$ref[$row[$lastPart]] = $row[$valuePart];
-				}
-
-				$serialized = $this->serializer->serialize($data, 'json');
-
-				$response->headers->set('Content-Type', sprintf('application/json; charset=UTF-8'));
-				$response->setContent($serialized);
-				break;
-
-			case 'flat.json':
+		switch ($hierarchy) {
+			case 'flat':
 				$valuePart = array_pop($valueParts);
 				$lastPart  = array_pop($valueParts);
 
@@ -127,7 +108,32 @@ abstract class AbstractDataController extends AbstractEntityManagerAwareControll
 
 					$ref[$row[$lastPart]] = $row[$valuePart];
 				}
+				break;
 
+			default:
+				$valuePart = array_pop($valueParts);
+				$lastPart  = array_pop($valueParts);
+
+				$parts = array_merge($timeParts, $valueParts);
+
+				$data = [];
+				foreach ($result as $row) {
+					$ref = & $data;
+					foreach ($parts as $part) {
+						$part = $row[$part];
+						if (!isset($ref[$part])) {
+							$ref[$part] = [];
+						}
+						$ref = & $ref[$part];
+					}
+
+					$ref[$row[$lastPart]] = $row[$valuePart];
+				}
+				break;
+		}
+
+		switch ($dataFormat) {
+			case 'json':
 				$serialized = $this->serializer->serialize($data, 'json');
 
 				$response->headers->set('Content-Type', sprintf('application/json; charset=UTF-8'));
