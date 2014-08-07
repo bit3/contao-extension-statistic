@@ -100,6 +100,39 @@ abstract class AbstractDataController extends AbstractEntityManagerAwareControll
 				$response->setContent($serialized);
 				break;
 
+			case 'flat':
+				$valuePart = array_pop($valueParts);
+				$lastPart  = array_pop($valueParts);
+
+				$data = [];
+				foreach ($result as $row) {
+					$key = [];
+					foreach ($timeParts as $part) {
+						$key[] = $row[$part];
+					}
+					$key = implode('-', $key);
+
+					if (!isset($data[$key])) {
+						$data[$key] = [];
+					}
+
+					$ref = & $data[$key];
+					foreach ($valueParts as $part) {
+						$part = $row[$part];
+						if (!isset($ref[$part])) {
+							$ref[$part] = [];
+						}
+						$ref = & $ref[$part];
+					}
+
+					$ref[$row[$lastPart]] = $row[$valuePart];
+				}
+
+				$serialized = $this->serializer->serialize($data, 'json');
+
+				$response->headers->set('Content-Type', sprintf('application/json; charset=UTF-8'));
+				$response->setContent($serialized);
+				break;
 
 			default:
 				throw new FileNotFoundException($request->getPathInfo());

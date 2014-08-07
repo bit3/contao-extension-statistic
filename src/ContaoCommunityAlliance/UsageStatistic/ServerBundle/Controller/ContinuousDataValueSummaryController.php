@@ -20,11 +20,11 @@ class ContinuousDataValueSummaryController extends AbstractDataController
 	/**
 	 * @Route(
 	 *     "/summary/values/weekly.{_format}",
-	 *     requirements={"_format"="json"}
+	 *     requirements={"_format"="json|flat"}
 	 * )
 	 * @Route(
 	 *     "/summary/values/weekly/{path}.{_format}",
-	 *     requirements={"path"=".*", "_format"="json"}
+	 *     requirements={"path"=".*", "_format"="json|flat"}
 	 * )
 	 *
 	 * @return Response
@@ -44,11 +44,11 @@ class ContinuousDataValueSummaryController extends AbstractDataController
 	/**
 	 * @Route(
 	 *     "/summary/values/monthly.{_format}",
-	 *     requirements={"_format"="json"}
+	 *     requirements={"_format"="json|flat"}
 	 * )
 	 * @Route(
 	 *     "/summary/values/monthly/{path}.{_format}",
-	 *     requirements={"path"=".*", "_format"="json"}
+	 *     requirements={"path"=".*", "_format"="json|flat"}
 	 * )
 	 *
 	 * @return Response
@@ -68,11 +68,11 @@ class ContinuousDataValueSummaryController extends AbstractDataController
 	/**
 	 * @Route(
 	 *     "/summary/values/quarterly.{_format}",
-	 *     requirements={"_format"="json"}
+	 *     requirements={"_format"="json|flat"}
 	 * )
 	 * @Route(
 	 *     "/summary/values/quarterly/{path}.{_format}",
-	 *     requirements={"path"=".*", "_format"="json"}
+	 *     requirements={"path"=".*", "_format"="json|flat"}
 	 * )
 	 *
 	 * @return Response
@@ -92,11 +92,11 @@ class ContinuousDataValueSummaryController extends AbstractDataController
 	/**
 	 * @Route(
 	 *     "/summary/values/yearly.{_format}",
-	 *     requirements={"_format"="json"}
+	 *     requirements={"_format"="json|flat"}
 	 * )
 	 * @Route(
 	 *     "/summary/values/yearly/{path}.{_format}",
-	 *     requirements={"path"=".*", "_format"="json"}
+	 *     requirements={"path"=".*", "_format"="json|flat"}
 	 * )
 	 *
 	 * @return Response
