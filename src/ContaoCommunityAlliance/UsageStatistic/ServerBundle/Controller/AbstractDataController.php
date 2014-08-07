@@ -140,6 +140,13 @@ abstract class AbstractDataController extends AbstractEntityManagerAwareControll
 				$response->setContent($serialized);
 				break;
 
+			case 'yml':
+				$serialized = $this->serializer->serialize($data, 'yml');
+
+				$response->headers->set('Content-Type', sprintf('text/yaml; charset=UTF-8'));
+				$response->setContent($serialized);
+				break;
+
 			default:
 				throw new FileNotFoundException($request->getPathInfo());
 		}
