@@ -8,6 +8,7 @@ use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\QueryBuilder;
 use JMS\Serializer\Serializer;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -63,18 +64,46 @@ abstract class AbstractDataController extends AbstractEntityManagerAwareControll
 	 *
 	 * @return Response
 	 */
-	protected function createResponse(Request $request, $data)
+	protected function createResponse(Request $request, $timeParts, $valueParts, $result)
 	{
-		$format = $request->getRequestFormat('json');
-
-		$serialized = $this->serializer->serialize($data, $format);
-
 		$response = new Response();
 		$response->setCharset('UTF-8');
-		$response->headers->set('Content-Type', sprintf('application/%s; charset=UTF-8', $format));
 		$response->headers->set('Access-Control-Allow-Origin', '*');
 		$response->headers->set('Access-Control-Allow-Methods', '*');
-		$response->setContent($serialized);
+
+		$format = $request->getRequestFormat('json');
+
+		switch ($format) {
+			case 'json':
+				$valuePart = array_pop($valueParts);
+				$lastPart  = array_pop($valueParts);
+
+				$parts = array_merge($timeParts, $valueParts);
+
+				$data = [];
+				foreach ($result as $row) {
+					$ref = & $data;
+					foreach ($parts as $part) {
+						$part = $row[$part];
+						if (!isset($ref[$part])) {
+							$ref[$part] = [];
+						}
+						$ref = & $ref[$part];
+					}
+
+					$ref[$row[$lastPart]] = $row[$valuePart];
+				}
+
+				$serialized = $this->serializer->serialize($data, 'json');
+
+				$response->headers->set('Content-Type', sprintf('application/json; charset=UTF-8'));
+				$response->setContent($serialized);
+				break;
+
+
+			default:
+				throw new FileNotFoundException($request->getPathInfo());
+		}
 
 		return $response;
 	}

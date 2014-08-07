@@ -33,14 +33,14 @@ class DataKeySummaryController extends AbstractDataController
 	{
 		$queryBuilder = $this->entityManager->createQueryBuilder();
 		$queryBuilder
-			->select('s.key', 's.summary')
+			->select('s.year', 's.week', 's.key', 's.summary')
 			->from('UsageStatisticServerBundle:WeeklyDataKeySummary', 's')
 			->where($queryBuilder->expr()->eq('s.year', ':year'))
 			->andWhere($queryBuilder->expr()->eq('s.week', ':week'))
 			->setParameter('year', $year, Type::INTEGER)
 			->setParameter('week', $week, Type::INTEGER);
 
-		return $this->abstractDataKeySummaryAction($request, $queryBuilder, 's', $path);
+		return $this->abstractDataKeySummaryAction($request, $queryBuilder, ['year', 'week'], 's', $path);
 	}
 
 	/**
@@ -59,14 +59,14 @@ class DataKeySummaryController extends AbstractDataController
 	{
 		$queryBuilder = $this->entityManager->createQueryBuilder();
 		$queryBuilder
-			->select('s.key', 's.summary')
+			->select('s.year', 's.month', 's.key', 's.summary')
 			->from('UsageStatisticServerBundle:MonthlyDataKeySummary', 's')
 			->where($queryBuilder->expr()->eq('s.year', ':year'))
 			->andWhere($queryBuilder->expr()->eq('s.month', ':month'))
 			->setParameter('year', $year, Type::INTEGER)
 			->setParameter('month', $month, Type::INTEGER);
 
-		return $this->abstractDataKeySummaryAction($request, $queryBuilder, 's', $path);
+		return $this->abstractDataKeySummaryAction($request, $queryBuilder, ['year', 'month'], 's', $path);
 	}
 
 	/**
@@ -85,14 +85,14 @@ class DataKeySummaryController extends AbstractDataController
 	{
 		$queryBuilder = $this->entityManager->createQueryBuilder();
 		$queryBuilder
-			->select('s.key', 's.summary')
+			->select('s.year', 's.quarter', 's.key', 's.summary')
 			->from('UsageStatisticServerBundle:QuarterlyDataKeySummary', 's')
 			->where($queryBuilder->expr()->eq('s.year', ':year'))
 			->andWhere($queryBuilder->expr()->eq('s.quarter', ':quarter'))
 			->setParameter('year', $year, Type::INTEGER)
 			->setParameter('quarter', $quarter, Type::INTEGER);
 
-		return $this->abstractDataKeySummaryAction($request, $queryBuilder, 's', $path);
+		return $this->abstractDataKeySummaryAction($request, $queryBuilder, ['year', 'quarter'], 's', $path);
 	}
 
 	/**
@@ -111,12 +111,12 @@ class DataKeySummaryController extends AbstractDataController
 	{
 		$queryBuilder = $this->entityManager->createQueryBuilder();
 		$queryBuilder
-			->select('s.key', 's.summary')
+			->select('s.year', 's.key', 's.summary')
 			->from('UsageStatisticServerBundle:YearlyDataKeySummary', 's')
 			->where($queryBuilder->expr()->eq('s.year', ':year'))
 			->setParameter('year', $year, Type::INTEGER);
 
-		return $this->abstractDataKeySummaryAction($request, $queryBuilder, 's', $path);
+		return $this->abstractDataKeySummaryAction($request, $queryBuilder, ['year'], 's', $path);
 	}
 
 	/**
@@ -129,7 +129,9 @@ class DataKeySummaryController extends AbstractDataController
 	 *
 	 * @return Response
 	 */
-	protected function abstractDataKeySummaryAction(Request $request, QueryBuilder $queryBuilder, $alias, $path)
+	protected function abstractDataKeySummaryAction(Request $request, QueryBuilder $queryBuilder,
+		array $parts,
+		$alias, $path)
 	{
 		$queryBuilder->orderBy($alias . '.key');
 		$this->addPathToQuery($queryBuilder, $alias, $path);
@@ -137,11 +139,6 @@ class DataKeySummaryController extends AbstractDataController
 		$query  = $queryBuilder->getQuery();
 		$result = $query->getResult();
 
-		$summaries = [];
-		foreach ($result as $row) {
-			$summaries[$row['key']] = $row['summary'];
-		}
-
-		return $this->createResponse($request, $summaries);
+		return $this->createResponse($request, $parts, ['key', 'summary'], $result);
 	}
 }

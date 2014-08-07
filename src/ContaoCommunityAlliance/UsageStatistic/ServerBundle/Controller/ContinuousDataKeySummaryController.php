@@ -137,20 +137,6 @@ class ContinuousDataKeySummaryController extends AbstractDataController
 		$query  = $queryBuilder->getQuery();
 		$result = $query->getResult();
 
-		$summaries = [];
-		foreach ($result as $row) {
-			$ref = & $summaries;
-			foreach ($parts as $part) {
-				$part = $row[$part];
-				if (!isset($ref[$part])) {
-					$ref[$part] = [];
-				}
-				$ref = & $ref[$part];
-			}
-
-			$ref[$row['key']] = $row['summary'];
-		}
-
-		return $this->createResponse($request, $summaries);
+		return $this->createResponse($request, $parts, ['key', 'summary'], $result);
 	}
 }
