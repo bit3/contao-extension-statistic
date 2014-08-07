@@ -97,6 +97,11 @@ class CollectController extends AbstractEntityManagerAwareController
 					continue;
 				}
 
+				if (!preg_match('~^[^/]+/[^/]+/.*$~', $key)) {
+					// invalid key
+					continue;
+				}
+
 				$dataKey = $dataKeyRepository->find($key);
 
 				if (!$dataKey) {
