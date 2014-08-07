@@ -4,7 +4,7 @@
         <body>
             <trans-unit id="not-found">
                 <source>not-found</source>
-                <target><![CDATA[Path not found, have you forgot to add the requested format?
+                <target><![CDATA[Resource not found, have you forgot to add the requested format?
 Try %url%
 
 Possible request uris:
