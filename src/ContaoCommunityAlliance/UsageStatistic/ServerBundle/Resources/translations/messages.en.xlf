@@ -2,12 +2,18 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
     <file source-language="en" datatype="plaintext" original="file.ext">
         <body>
+            <trans-unit id="welcome">
+                <source>welcome</source>
+                <target><![CDATA[Welcome to the CCA usage statistic server.]]></target>
+            </trans-unit>
             <trans-unit id="not-found">
                 <source>not-found</source>
                 <target><![CDATA[Resource not found, have you forgotten to add the requested format?
-Try %url%
-
-Possible request uris:
+Try %url%]]></target>
+            </trans-unit>
+            <trans-unit id="help">
+                <source>help</source>
+                <target><![CDATA[Possible request uris:
 
   URI = "/summary/", Type, "/", Time, ["/", Pattern], ".", Format ;
 
@@ -25,7 +31,7 @@ Possible request uris:
     Day           = ? a day number (1-31), e.g. "2" for the seconds day ?
     Pattern       = ? all visible characters, filter pattern to search by keys, * wildcard is allowed ? ;
     Format        = [Hierarchy, "."], DataFormat ;
-    Hierarchy     = "flat"
+    Hierarchy     = "flat" ;
     DataFormat    = "json" | "yml" ;
 
   You are not familiar with EBNF?  http://en.wikipedia.org/wiki/Extended_Backus%E2%80%93Naur_Form

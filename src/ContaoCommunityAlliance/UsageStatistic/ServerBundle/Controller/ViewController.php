@@ -45,7 +45,17 @@ class ViewController
 	 */
 	public function indexAction()
 	{
-		return new RedirectResponse('https://c-c-a.org/statistik');
+		$content = $this->translator->trans('welcome', [], 'messages') .
+			PHP_EOL . PHP_EOL .
+			$this->translator->trans('help', [], 'messages');
+
+		$response = new Response();
+		$response->setStatusCode(404);
+		$response->setCharset('UTF-8');
+		$response->setContent($content);
+		$response->headers->set('Content-Type', 'text/plain; charset=UTF-8');
+
+		return $response;
 	}
 
 	/**
@@ -56,7 +66,9 @@ class ViewController
 	public function notFoundAction(Request $request, $path)
 	{
 		$url     = preg_replace('~\.\w+$~', '', $request->getUri()) . '.json';
-		$content = $this->translator->trans('not-found', ['%url%' => $url], 'messages');
+		$content = $this->translator->trans('not-found', ['%url%' => $url], 'messages') .
+			PHP_EOL . PHP_EOL .
+			$this->translator->trans('help', [], 'messages');
 
 		$response = new Response();
 		$response->setStatusCode(404);
