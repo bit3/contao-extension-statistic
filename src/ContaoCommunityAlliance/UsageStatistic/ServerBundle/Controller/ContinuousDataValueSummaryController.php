@@ -24,7 +24,7 @@ class ContinuousDataValueSummaryController extends AbstractDataController
 	 * )
 	 * @Route(
 	 *     "/summary/values/daily/{path}.{_format}",
-	 *     requirements={"path"=".*", "_format"="(flat\.)?(json|yml)"}
+	 *     requirements={"path"=".+?", "_format"="(flat\.)?(json|yml)"}
 	 * )
 	 *
 	 * @return Response
@@ -49,7 +49,7 @@ class ContinuousDataValueSummaryController extends AbstractDataController
 	 * )
 	 * @Route(
 	 *     "/summary/values/weekly/{path}.{_format}",
-	 *     requirements={"path"=".*", "_format"="(flat\.)?(json|yml)"}
+	 *     requirements={"path"=".+?", "_format"="(flat\.)?(json|yml)"}
 	 * )
 	 *
 	 * @return Response
@@ -73,7 +73,7 @@ class ContinuousDataValueSummaryController extends AbstractDataController
 	 * )
 	 * @Route(
 	 *     "/summary/values/monthly/{path}.{_format}",
-	 *     requirements={"path"=".*", "_format"="(flat\.)?(json|yml)"}
+	 *     requirements={"path"=".+?", "_format"="(flat\.)?(json|yml)"}
 	 * )
 	 *
 	 * @return Response
@@ -97,7 +97,7 @@ class ContinuousDataValueSummaryController extends AbstractDataController
 	 * )
 	 * @Route(
 	 *     "/summary/values/quarterly/{path}.{_format}",
-	 *     requirements={"path"=".*", "_format"="(flat\.)?(json|yml)"}
+	 *     requirements={"path"=".+?", "_format"="(flat\.)?(json|yml)"}
 	 * )
 	 *
 	 * @return Response
@@ -121,7 +121,7 @@ class ContinuousDataValueSummaryController extends AbstractDataController
 	 * )
 	 * @Route(
 	 *     "/summary/values/yearly/{path}.{_format}",
-	 *     requirements={"path"=".*", "_format"="(flat\.)?(json|yml)"}
+	 *     requirements={"path"=".+?", "_format"="(flat\.)?(json|yml)"}
 	 * )
 	 *
 	 * @return Response
@@ -162,7 +162,6 @@ class ContinuousDataValueSummaryController extends AbstractDataController
 
 		$query  = $queryBuilder->getQuery();
 		$result = $query->getResult();
-
 		return $this->createResponse($request, $parts, ['key', 'value', 'summary'], $result);
 	}
 }

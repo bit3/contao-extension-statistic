@@ -24,7 +24,7 @@ class ContinuousDataKeySummaryController extends AbstractDataController
 	 * )
 	 * @Route(
 	 *     "/summary/keys/daily/{path}.{_format}",
-	 *     requirements={"path"=".*", "_format"="(flat\.)?(json|yml)"}
+	 *     requirements={"path"=".+?", "_format"="(flat\.)?(json|yml)"}
 	 * )
 	 *
 	 * @return Response
@@ -49,7 +49,7 @@ class ContinuousDataKeySummaryController extends AbstractDataController
 	 * )
 	 * @Route(
 	 *     "/summary/keys/weekly/{path}.{_format}",
-	 *     requirements={"path"=".*", "_format"="(flat\.)?(json|yml)"}
+	 *     requirements={"path"=".+?", "_format"="(flat\.)?(json|yml)"}
 	 * )
 	 *
 	 * @return Response
@@ -73,7 +73,7 @@ class ContinuousDataKeySummaryController extends AbstractDataController
 	 * )
 	 * @Route(
 	 *     "/summary/keys/monthly/{path}.{_format}",
-	 *     requirements={"path"=".*", "_format"="(flat\.)?(json|yml)"}
+	 *     requirements={"path"=".+?", "_format"="(flat\.)?(json|yml)"}
 	 * )
 	 *
 	 * @return Response
@@ -97,7 +97,7 @@ class ContinuousDataKeySummaryController extends AbstractDataController
 	 * )
 	 * @Route(
 	 *     "/summary/keys/quarterly/{path}.{_format}",
-	 *     requirements={"path"=".*", "_format"="(flat\.)?(json|yml)"}
+	 *     requirements={"path"=".+?", "_format"="(flat\.)?(json|yml)"}
 	 * )
 	 *
 	 * @return Response
@@ -121,7 +121,7 @@ class ContinuousDataKeySummaryController extends AbstractDataController
 	 * )
 	 * @Route(
 	 *     "/summary/keys/yearly/{path}.{_format}",
-	 *     requirements={"path"=".*", "_format"="(flat\.)?(json|yml)"}
+	 *     requirements={"path"=".+?", "_format"="(flat\.)?(json|yml)"}
 	 * )
 	 *
 	 * @return Response

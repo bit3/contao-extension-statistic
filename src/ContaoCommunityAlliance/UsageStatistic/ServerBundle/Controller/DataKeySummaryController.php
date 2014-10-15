@@ -24,7 +24,7 @@ class DataKeySummaryController extends AbstractDataController
 	 * )
 	 * @Route(
 	 *     "/summary/keys/{year}-{month}-{day}/{path}.{_format}",
-	 *     requirements={"year"="\d{4}", "month"="\d{1,2}", "day"="\d{1,2}", "path"=".*", "_format"="(flat\.)?(json|yml)"}
+	 *     requirements={"year"="\d{4}", "month"="\d{1,2}", "day"="\d{1,2}", "path"=".+?", "_format"="(flat\.)?(json|yml)"}
 	 * )
 	 *
 	 * @return Response
@@ -52,7 +52,7 @@ class DataKeySummaryController extends AbstractDataController
 	 * )
 	 * @Route(
 	 *     "/summary/keys/{year}w{week}/{path}.{_format}",
-	 *     requirements={"year"="\d{4}", "week"="\d{1,2}", "path"=".*", "_format"="(flat\.)?(json|yml)"}
+	 *     requirements={"year"="\d{4}", "week"="\d{1,2}", "path"=".+?", "_format"="(flat\.)?(json|yml)"}
 	 * )
 	 *
 	 * @return Response
@@ -78,7 +78,7 @@ class DataKeySummaryController extends AbstractDataController
 	 * )
 	 * @Route(
 	 *     "/summary/keys/{year}-{month}/{path}.{_format}",
-	 *     requirements={"year"="\d{4}", "month"="\d{1,2}", "path"=".*", "_format"="(flat\.)?(json|yml)"}
+	 *     requirements={"year"="\d{4}", "month"="\d{1,2}", "path"=".+?", "_format"="(flat\.)?(json|yml)"}
 	 * )
 	 *
 	 * @return Response
@@ -104,7 +104,7 @@ class DataKeySummaryController extends AbstractDataController
 	 * )
 	 * @Route(
 	 *     "/summary/keys/{year}q{quarter}/{path}.{_format}",
-	 *     requirements={"year"="\d{4}", "quarter"="\d", "path"=".*", "_format"="(flat\.)?(json|yml)"}
+	 *     requirements={"year"="\d{4}", "quarter"="\d", "path"=".+?", "_format"="(flat\.)?(json|yml)"}
 	 * )
 	 *
 	 * @return Response
@@ -130,7 +130,7 @@ class DataKeySummaryController extends AbstractDataController
 	 * )
 	 * @Route(
 	 *     "/summary/keys/{year}/{path}.{_format}",
-	 *     requirements={"year"="\d{4}", "path"=".*", "_format"="(flat\.)?(json|yml)"}
+	 *     requirements={"year"="\d{4}", "path"=".+?", "_format"="(flat\.)?(json|yml)"}
 	 * )
 	 *
 	 * @return Response

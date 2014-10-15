@@ -23,7 +23,7 @@ class DataController extends AbstractDataController
 	 * )
 	 * @Route(
 	 *     "/keys/{path}.{_format}",
-	 *     requirements={"_format"="(flat\.)?(json|yml)", "path"=".*"}
+	 *     requirements={"_format"="(flat\.)?(json|yml)", "path"=".+?"}
 	 * )
 	 *
 	 * @return Response
