@@ -24,6 +24,13 @@ class StatisticGenerator
 	protected $entityManager;
 
 	/**
+	 * The memory limit.
+	 *
+	 * @var int
+	 */
+	private $memoryLimit = null;
+
+	/**
 	 * @return EntityManager
 	 */
 	public function getEntityManager()
@@ -40,6 +47,62 @@ class StatisticGenerator
 	{
 		$this->entityManager = $entityManager;
 		return $this;
+	}
+
+	/**
+	 * Return the memory limit in bytes.
+	 *
+	 * @return int
+	 */
+	private function getMemoryLimit()
+	{
+		if (null === $this->memoryLimit) {
+			$memoryLimit = strtolower(ini_get('memory_limit'));
+
+			if (preg_match('~^(\d+)(tgmk)?$~', $memoryLimit, $matches)) {
+				$memoryLimit = $matches[1];
+				switch ($matches[2]) {
+					case 't':
+						$memoryLimit *= 1024;
+					// no break
+					case 'g':
+						$memoryLimit *= 1024;
+					// no break
+					case 'm':
+						$memoryLimit *= 1024;
+					// no break
+					case 'k':
+						$memoryLimit *= 1024;
+						break;
+				}
+			}
+
+			$this->memoryLimit = (int) $memoryLimit;
+		}
+
+		return $this->memoryLimit;
+	}
+
+	/**
+	 * Determine if flush is required due to memory consumtion.
+	 *
+	 * @return bool
+	 */
+	private function isFlushRequired()
+	{
+		$memoryLimit = $this->getMemoryLimit();
+
+		if ($memoryLimit <= 0) {
+			return false;
+		}
+
+		$memoryUsage = memory_get_usage();
+
+		if ($memoryUsage >= (.8 * $memoryLimit)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public function generateDaily()
@@ -153,6 +216,11 @@ SQL;
 			$entity->setSummary($row['summary']);
 
 			$this->entityManager->persist($entity);
+
+			if ($this->isFlushRequired()) {
+				$this->entityManager->flush();
+				$this->entityManager->clear();
+			}
 		}
 
 		$this->entityManager->flush();
@@ -240,6 +308,11 @@ SQL;
 			$entity->setSummary($row['summary']);
 
 			$this->entityManager->persist($entity);
+
+			if ($this->isFlushRequired()) {
+				$this->entityManager->flush();
+				$this->entityManager->clear();
+			}
 		}
 
 		$this->entityManager->flush();
