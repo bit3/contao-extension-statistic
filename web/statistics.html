@@ -1,0 +1,138 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--><html class="no-js"><!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Usage statistics</title>
+    <meta name="description" content="Contao extension usage statistics.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <script type="text/javascript" src="//code.jquery.com/jquery-git2.js"></script>
+    <script src="//cdn.rawgit.com/gionkunz/chartist-js/develop/libdist/chartist.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="//cdn.rawgit.com/gionkunz/chartist-js/master/libdist/chartist.min.css" />
+    <style type="text/css">
+
+        #contao-core {
+            display: block;
+            height: auto;
+            float: left;
+            width: 50%;
+            padding: 0 .625rem 1.25rem;
+            list-style: none;
+        }
+
+        .ct-legend {
+            padding: 0;
+            font-family: sans-serif;
+        }
+
+        li {
+            position: relative;
+            padding-left: 1.3em;
+            margin-bottom: 0.3em;
+            list-style-type: none;
+        }
+
+        li::before {
+            height: 1em;
+            width: 1em;
+            position: absolute;
+            top: 0.1em;
+            left: 0;
+            content: ' ';
+            border-radius: 1em;
+        }
+
+        .ct-legend .ct-series-0:before {
+            background-color: #d70206;
+        }
+
+        .ct-legend .ct-series-1:before {
+            background-color: #F05B4F;
+        }
+
+        .ct-legend .ct-series-2:before {
+            background-color: #F4C63D;
+        }
+
+        .ct-legend .ct-series-3:before {
+            background-color: #453D3F;
+        }
+    </style>
+</head>
+<body>
+<div id="contao-core-total"></div>
+<div id="contao-core"></div>
+<script language="JavaScript">
+    function drawCoreVersionsTotal(elementId) {
+        var diagram = $('<div>')
+                .addClass('ct-chart')
+                .appendTo('#' + elementId);
+        $.ajax({
+            dataType: "json",
+            url: 'http://statistic.c-c-a.org/app_dev.php/core-over-time.json',
+            success: function (data) {
+                var series = [];
+
+                for (var i=0;i<data.labels.length;i++) {
+                    series.push(0);
+                }
+
+                for (var version in data.series) {
+                    $.each(data.series[version], function(i, val) {
+                        series[i] += val;
+                    });
+                }
+
+                Chartist.Line(diagram[0], {
+                    labels: data.labels,
+                    series: [series]
+                });
+            }
+        });
+    }
+
+    function drawCoreVersions(elementId) {
+        var diagram = $('<div>')
+                .addClass('ct-chart')
+                .appendTo('#' + elementId);
+        var legend = $('<ul>')
+                .addClass('ct-legend')
+                .appendTo('#' + elementId);
+        $.ajax({
+            dataType: "json",
+            url: 'http://statistic.c-c-a.org/app_dev.php/core-over-time.json',
+            success: function (data) {
+
+                var versions = [];
+                var series = [];
+                for (var version in data.series) {
+                    versions.push(version);
+                    series.push(data.series[version]);
+                }
+
+                Chartist.Line(diagram[0], {
+                    labels: data.labels,
+                    series: series
+                });
+
+                $.each(versions, function(i, val) {
+                    var listItem = $('<li />')
+                            .addClass('ct-series-' + i)
+                            .html('<strong>' + val + '</strong>')
+                            .appendTo(legend);
+                });
+            }
+        });
+    }
+    //<![CDATA[
+    $(function(){
+        drawCoreVersionsTotal('contao-core-total');
+        drawCoreVersions('contao-core');
+    });
+    //]]>
+</script>
+</body>
+</html>
